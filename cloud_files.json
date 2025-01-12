@@ -1,0 +1,51 @@
+[
+  {
+    "id": "file_01JB20GEG85X06RKQ4VNTWKSG3",
+    "accessPolicies": [],
+    "contentType": "application/pdf",
+    "size": 241666,
+    "status": "indexing_completed",
+    "tags": {
+      "kbId": "kb-9dcfd36cd7",
+      "title": "Afganistan (1).pdf",
+      "source": "knowledge-base"
+    },
+    "key": "kb-9dcfd36cd7/Afganistan (1).pdf",
+    "index": true,
+    "updatedAt": "2024-10-25T14:15:26.463Z"
+  },
+  {
+    "id": "file_01JB1EDW7GDWAG4NVA3Q27PW00",
+    "accessPolicies": [
+      "public_content"
+    ],
+    "contentType": "application/json",
+    "size": 264,
+    "status": "upload_completed",
+    "tags": {
+      "source": "integration",
+      "integrationName": "webchat",
+      "webchatConfigVersion": "1"
+    },
+    "key": "webchatConfig.json",
+    "index": false,
+    "updatedAt": "2025-01-10T11:41:40.787Z"
+  },
+  {
+    "id": "file_01JB1EDW1JG3463BCBKCMCPM4R",
+    "accessPolicies": [
+      "public_content"
+    ],
+    "contentType": "application/javascript",
+    "size": 287,
+    "status": "upload_completed",
+    "tags": {
+      "source": "integration",
+      "integrationName": "webchat",
+      "webchatInjectConfigVersion": "1"
+    },
+    "key": "webchatConfigInject.js",
+    "index": false,
+    "updatedAt": "2025-01-10T11:41:40.646Z"
+  }
+]

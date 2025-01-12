@@ -1,0 +1,4118 @@
+{
+  "version": "1.13",
+  "settings": {
+    "defaultLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "description": "",
+    "id": "aa4f8cb0-4825-4941-a800-0b1f0b70258f",
+    "inactivityTimeout": 30,
+    "botVariables": [],
+    "userVariables": [],
+    "nodeRepetitionLimit": 3,
+    "configVariables": {},
+    "cognitiveConfigs": {
+      "openAi": {}
+    },
+    "defaultBestModel": "openai__gpt-4o-2024-05-13",
+    "defaultFastModel": "openai__gpt-4o-mini-2024-07-18",
+    "useClient": true,
+    "llmzVersion": "17-Aug-2024"
+  },
+  "flows": [
+    {
+      "id": "wf-error",
+      "name": "Error",
+      "startNode": "nd-98dc0bcc87",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-1cb5862648",
+          "source": "nd-98dc0bcc87",
+          "sourcePort": "trs-02c7129430",
+          "target": "nd-58fca56e01"
+        },
+        {
+          "id": "edg-1c28c96d6a",
+          "source": "nd-58fca56e01",
+          "sourcePort": "nd-58fca56e01",
+          "target": "nd-e05f59dd66"
+        }
+      ],
+      "nodes": [
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⛔️ When something goes wrong</span></strong></p><p><br>This workflow is executed when there's an <strong>unexpected error</strong> in one of the other workflows.</p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-8ff3d7d295",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 401,
+          "x": 90,
+          "y": -45
+        },
+        {
+          "instructions": [
+            {
+              "id": "ins-2762f70004",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "staticValue": "Sorry, an error occurred. Please try again later",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-58fca56e01",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-e05f59dd66"
+          },
+          "type": "standard",
+          "id": "nd-58fca56e01",
+          "name": "Handler",
+          "deletable": true,
+          "x": 450,
+          "y": 120
+        },
+        {
+          "id": "nd-98dc0bcc87",
+          "name": "On_Error",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-02c7129430",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-58fca56e01"
+              },
+              "transitions": [],
+              "nodeId": "nd-98dc0bcc87"
+            }
+          ],
+          "x": 90,
+          "y": 120
+        },
+        {
+          "id": "nd-e05f59dd66",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-945140a646",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-e05f59dd66"
+            }
+          ],
+          "x": 810,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "id": "wf-timeout",
+      "name": "Timeout",
+      "startNode": "nd-9f7f3268ac",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-b0d2adcd13",
+          "source": "nd-e6c012a652",
+          "sourcePort": "nd-e6c012a652",
+          "target": "nd-199fdcf439"
+        },
+        {
+          "id": "edg-6d17a0591b",
+          "source": "nd-9f7f3268ac",
+          "sourcePort": "trs-0c7a9a0003",
+          "target": "nd-e6c012a652"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-199fdcf439"
+          },
+          "type": "standard",
+          "id": "nd-e6c012a652",
+          "name": "Handler",
+          "deletable": true,
+          "x": 435,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⌛️ When conversation times out</span></strong></p><p><br>This workflow is executed when the conversation <strong>times out</strong> before it had time to flow to an <strong>End Node</strong>.</p><p></p><p>The <strong>Timeout Delay</strong> is configurable in the <strong>Chatbot Settings.</strong></p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-441efa6c42",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 173,
+          "width": 401,
+          "x": 105,
+          "y": -90
+        },
+        {
+          "id": "nd-9f7f3268ac",
+          "name": "On_Timeout",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-0c7a9a0003",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-e6c012a652"
+              },
+              "transitions": [],
+              "nodeId": "nd-9f7f3268ac"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-199fdcf439",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-bf76943d55",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-199fdcf439"
+            }
+          ],
+          "x": 795,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "id": "wf-conversation-end",
+      "name": "Conversation End",
+      "startNode": "nd-c0d3bd2c92",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-3cb8028ff6",
+          "source": "nd-c0d3bd2c92",
+          "sourcePort": "trs-92c6f93b0c",
+          "target": "nd-2db7499cc6"
+        },
+        {
+          "id": "edg-8a88f687a0",
+          "source": "nd-2db7499cc6",
+          "sourcePort": "nd-2db7499cc6",
+          "target": "nd-d0c2a6be81"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-d0c2a6be81"
+          },
+          "type": "standard",
+          "id": "nd-2db7499cc6",
+          "name": "Handler",
+          "deletable": true,
+          "x": 420,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">👋 Before Conversation Ends</span></strong></p><p><br>This workflow is executed when right before the conversation <strong>Ends Explicitly.</strong></p><p></p><p>An <strong>Explicit Ending</strong> happens when a workflow transitions on an <strong>End Node</strong>.</p>",
+          "type": "comment",
+          "id": "nd-6d5d3f41dd",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 461,
+          "x": 105,
+          "y": -45
+        },
+        {
+          "id": "nd-c0d3bd2c92",
+          "name": "On_Explicit_Ending",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-92c6f93b0c",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-2db7499cc6"
+              },
+              "transitions": [],
+              "nodeId": "nd-c0d3bd2c92"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-d0c2a6be81",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-7004dbb2b6",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-d0c2a6be81"
+            }
+          ],
+          "x": 780,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "topicId": "tpc-global",
+      "id": "wf-main",
+      "name": "Main",
+      "startNode": "nd-2bb9db230d",
+      "variables": [
+        {
+          "id": "var-76d951173b",
+          "name": "CityEnd",
+          "type": "string",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CorrectCityEnd",
+          "description": "",
+          "id": "var-33d307b874",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-16e72998d4",
+          "name": "StartDate",
+          "type": "date",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-6de7c02e82",
+          "name": "EndDate",
+          "type": "date",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-00ca5cbde5",
+          "type": "date",
+          "name": "CurrentDate",
+          "description": "new Date()",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CityStart",
+          "description": "",
+          "id": "var-72b0e7565a",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CityStartCorrect",
+          "description": "",
+          "id": "var-4f8dc286cc",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CityStartCorrectKB",
+          "description": "",
+          "id": "var-e4ecfc6118",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CityStartCode",
+          "description": "",
+          "id": "var-47f6ed8ca5",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "CityEndCode",
+          "description": "",
+          "id": "var-2414d9aa20",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": 0,
+          "type": "number",
+          "name": "PriceStart",
+          "description": "",
+          "id": "var-6890c02fc6",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": 0,
+          "type": "number",
+          "name": "NumberOfStops",
+          "description": "",
+          "id": "var-895b3a6107",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "id": "var-564806edf5",
+          "name": "CurrencyCode",
+          "type": "string",
+          "description": "",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-f369c8e279",
+          "name": "MaxNumberOfStops",
+          "type": "number",
+          "description": "",
+          "scope": "workflow",
+          "defaultValue": 0
+        },
+        {
+          "id": "var-1570755b6b",
+          "name": "ChangeData",
+          "description": "",
+          "type": "number",
+          "scope": "workflow",
+          "defaultValue": 0
+        },
+        {
+          "id": "var-89ff21b67e",
+          "name": "ChangeCity",
+          "description": "",
+          "type": "number",
+          "scope": "workflow",
+          "defaultValue": 0
+        },
+        {
+          "id": "var-5450f5589d",
+          "name": "NoStopFlight",
+          "description": "",
+          "type": "number",
+          "scope": "workflow",
+          "defaultValue": 0,
+          "min": 0,
+          "max": 0
+        },
+        {
+          "id": "var-979932921a",
+          "name": "NoOffers",
+          "description": "",
+          "type": "number",
+          "scope": "workflow",
+          "defaultValue": 0
+        },
+        {
+          "id": "var-d4c6a74cd1",
+          "name": "UserCityDescribe",
+          "type": "string",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-b3dff456fd",
+          "name": "Country1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-5b40fdcade",
+          "name": "Country2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-c93d33b2e7",
+          "name": "City2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "City3",
+          "description": "",
+          "id": "var-be43a1a95f",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "City4",
+          "description": "",
+          "id": "var-07318014da",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "City5",
+          "description": "",
+          "id": "var-f53d429b01",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "City6",
+          "description": "",
+          "id": "var-24a01ced15",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "id": "var-1ff07da127",
+          "name": "KnowCity",
+          "type": "string",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-72df6bef2a",
+          "name": "CityEndCorrectKB",
+          "type": "string",
+          "description": "",
+          "scope": "workflow",
+          "defaultValue": "no"
+        },
+        {
+          "id": "var-d405f0fb15",
+          "name": "City1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": "None"
+        },
+        {
+          "id": "var-6f00e5534d",
+          "name": "CurrencyCodeB",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-4572b1492f",
+          "name": "Curren",
+          "type": "string",
+          "description": "",
+          "scope": "workflow"
+        },
+        {
+          "id": "var-1080457bac",
+          "name": "StartCity1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-d67e45f1ef",
+          "name": "EndCity1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-5a037f9d80",
+          "name": "Date1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-31eb1547b5",
+          "name": "PriceStart1",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-1bf9f467c4",
+          "name": "PriceStart2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-def0c780ad",
+          "name": "PriceStart3",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-3cad3dee55",
+          "name": "StartCity2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-2e21d91938",
+          "name": "StartCity3",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-373fe3e3a8",
+          "name": "EndCity2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-e889886179",
+          "name": "EndCity3",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-5d1abb1f2b",
+          "name": "Date2",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-3709d4b429",
+          "name": "Date3",
+          "description": "",
+          "type": "string",
+          "scope": "workflow",
+          "defaultValue": ""
+        },
+        {
+          "id": "var-2eeb71f515",
+          "name": "FlightNumber",
+          "description": "",
+          "type": "number",
+          "scope": "workflow",
+          "defaultValue": 0
+        }
+      ],
+      "links": [],
+      "nodes": [
+        {
+          "instructions": [
+            {
+              "id": "ins-e4d6651634",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Hello! 🌍✈️ I’m your AI travel consultant, here to help you plan the perfect trip. Whether you're looking for adventure, relaxation, or something in between, I’ve got you covered!\n\nTo get started, can you tell me a bit about your travel plans? For example:\n\n- Where are you thinking of going?\n- When would you like to travel?\n- What kind of experiences are you looking for—beach, city, mountains, or something else?\n\nLet’s create your dream getaway! 🌟",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-83a5699645",
+              "transitions": []
+            },
+            {
+              "id": "trs-d14e7b802a",
+              "type": "transition",
+              "label": "",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-842da2676e"
+              },
+              "generative": {
+                "label": "",
+                "properties": {
+                  "label": true,
+                  "condition": true
+                },
+                "suggestion": {
+                  "label": "",
+                  "condition": "true"
+                }
+              },
+              "transitions": [],
+              "nodeId": "nd-83a5699645"
+            }
+          ],
+          "type": "standard",
+          "id": "nd-83a5699645",
+          "name": "Starting_Message",
+          "deletable": true,
+          "x": -975,
+          "y": -285
+        },
+        {
+          "id": "nd-2bb9db230d",
+          "name": "Start",
+          "type": "start",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-8b0779edc5",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-83a5699645"
+              },
+              "transitions": [],
+              "nodeId": "nd-2bb9db230d"
+            }
+          ],
+          "x": -1155,
+          "y": -225,
+          "kbPriority": {
+            "enabled": true,
+            "searchScope": "all",
+            "kbs": []
+          }
+        },
+        {
+          "id": "nd-80ac4ff158",
+          "name": "End",
+          "type": "end",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-0260f5e672",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-80ac4ff158"
+            }
+          ],
+          "x": 5280,
+          "y": -165
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 330,
+          "y": -300,
+          "instructions": [
+            {
+              "id": "ins-ae18180e96",
+              "type": "capture",
+              "entityId": "prompts://RawInput/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "specific",
+                "kbs": [
+                  "kb-2e1848b79d"
+                ]
+              },
+              "nodeId": "nd-769e87f9a4",
+              "variableId": "var-72b0e7565a",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Great! ✈️ Now, where will you be flying from? Please tell me the city you'd like to depart from.",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 1,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"undefined\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: undefined\nuser: undefined\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0,
+                "signatureVersion": "Jan-2024",
+                "signature": "wsDIMaSsJ1YTaWLaNEaV5IgB+C2qyh801nUa4CdCsmubxvThog1rJ7tYXwHKDnA4cpOm6gnznXN6AdKJSoh/tbRxO1abxj04bRbCn9y7BZ8i3qZQl1Le5PIaAmfampxeHFl8IasZNZYi5uWVQnd1IPS3iFv6wYhBGa/EPlz+AagSKdqmn11u/DSAfrYixnA2rW+XEORrVeVMt1P8zFU7ssoTSSNt7LZh1xmH0amoWFad2vSDxu/2eU55NZSGFlB8a1soPEGYq83QN6mHXldjsO1mEV7cHWsSBZPTXG37GipXEbYKe/9sQNwg6mpBLIuvbliiJ9DvjkkSyXQVkVhTyg=="
+              }
+            },
+            {
+              "type": "ai",
+              "id": "ins-731f28c7d1",
+              "task": {
+                "instructions": "If the city is misspelled or close enought to real city write a correct city to variable CityStartCorrect",
+                "input": "change the @workflow.CityStart to be real city",
+                "outputVariableIds": [
+                  "var-4f8dc286cc"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "krakw",
+                    "output": {
+                      "CityCorrect": "krakow"
+                    }
+                  },
+                  {
+                    "input": "pozna",
+                    "output": {
+                      "CityCorrect": "poznan"
+                    }
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-769e87f9a4",
+              "label": "CityStartCorrect",
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nIf the city is misspelled or close enought to real city write a correct city to variable CityStartCorrect\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"CityStartCorrect\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nkrakw\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CityCorrect\":\"krakow\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\npozna\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CityCorrect\":\"poznan\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0
+              }
+            },
+            {
+              "id": "ins-c402e7a601",
+              "tutorialId": "knowledge-query",
+              "description": "Retrieve answer & citations from Knowledge Bases to a custom query",
+              "title": "Query Knowledge Bases",
+              "schema": {
+                "_def": {
+                  "unknownKeys": "strip",
+                  "catchall": {
+                    "_def": {
+                      "typeName": "ZodNever"
+                    }
+                  },
+                  "typeName": "ZodObject"
+                },
+                "_cached": null
+              },
+              "uiconfiguration": {
+                "type": "VerticalLayout",
+                "elements": [
+                  {
+                    "type": "Input",
+                    "scope": "#/properties/query",
+                    "options": {
+                      "superInput": true
+                    }
+                  },
+                  {
+                    "type": "KBPicker",
+                    "label": "Knowledge Bases",
+                    "scope": "#/properties/kbs"
+                  },
+                  {
+                    "type": "VariablePicker",
+                    "label": "Store answer in variable",
+                    "scope": "#/properties/answerVariableId"
+                  }
+                ]
+              },
+              "type": "action",
+              "label": "Query Knowledge Bases",
+              "category": "Agents",
+              "origin": "agent",
+              "agent": {
+                "action": "knowledge-query",
+                "id": "KnowledgeAgent"
+              },
+              "nodeId": "nd-769e87f9a4",
+              "data": {
+                "query": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "is @workflow.CityStartCorrect existing in the document answer \"yes\" or \"no\""
+                },
+                "kbs": {
+                  "enabled": true,
+                  "kbs": [
+                    "kb-2e1848b79d"
+                  ],
+                  "searchScope": "specific"
+                },
+                "answerVariableId": "var-e4ecfc6118"
+              },
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            },
+            {
+              "type": "ai",
+              "category": "AI",
+              "id": "ins-a712852d0e",
+              "task": {
+                "instructions": "Find the city code that is associated to the airport in standard IATA",
+                "input": "@workflow.CityStartCorrect  find the City code associated to the airport IATA",
+                "outputVariableIds": [
+                  "var-47f6ed8ca5"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "",
+                    "output": {}
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-769e87f9a4",
+              "label": "CityStartCode",
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nFind the city code that is associated to the airport in standard IATA\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"CityStartCode\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0
+              }
+            },
+            {
+              "id": "ins-1250a10c2a",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") && workflow.KnowCity.toLowerCase().includes(\"yes\") && workflow.ChangeCity === 1"
+              },
+              "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And @workflow.KnowCity is \"Yes\" or \"tak\" and ChangeCity is 1",
+              "generative": {
+                "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And @workflow.KnowCity is \"Yes\" or \"tak\" and ChangeCity is 1",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") && workflow.KnowCity.toLowerCase() === \"yes\" && workflow.ChangeCity === 1"
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-769e87f9a4",
+              "description": "",
+              "destination": {
+                "node": "nd-6dcb79b210"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-9822544541",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") && workflow.KnowCity.toLowerCase().includes(\"yes\") && workflow.ChangeCity === 0"
+              },
+              "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And @workflow.KnowCity is \"Yes\" or \"tak\"",
+              "generative": {
+                "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And @workflow.KnowCity is \"Yes\" or \"tak\"",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") && workflow.KnowCity.toLowerCase() === \"yes\""
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-769e87f9a4",
+              "description": "",
+              "destination": {
+                "node": "nd-6dcb79b210"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-7123cbd15a",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrectKB.toLowerCase().includes(\"no\") || workflow.CityStartCorrectKB.toLowerCase().includes(\"nie\")  && workflow.KnowCity.toLowerCase().includes(\"No)\") && workflow.ChangeCity === 0"
+              },
+              "label": "If @workflow.CityStartCorrectKB contains \"no\" or \"nie.\" regardless of Uppercase or \".\"",
+              "generative": {
+                "label": "If @workflow.CityStartCorrectKB contains \"no\" or \"nie.\" regardless of Uppercase or \".\"",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrectKB.toLowerCase().includes(\"no\") || workflow.CityStartCorrectKB.toLowerCase().includes(\"nie\")"
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "nodeId": "nd-769e87f9a4",
+              "destination": {
+                "node": "nd-769e87f9a4"
+              },
+              "transitions": [],
+              "description": ""
+            },
+            {
+              "id": "ins-163141ff45",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") || workflow.CityStartCorrectKB.toLowerCase().includes(\"tak\") && workflow.KnowCity.Includes(\"No\")  && workflow.ChangeCity === 1\n"
+              },
+              "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And KnowCity is \"No\"",
+              "generative": {
+                "label": "If @workflow.CityStartCorrectKB contains \"yes\" or \"tak\"regardless of Uppercase or \".\" And KnowCity is \"No\"",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrectKB.toLowerCase().includes(\"yes\") || workflow.CityStartCorrectKB.toLowerCase().includes(\"tak\") && user.KnowCity === \"No\""
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-769e87f9a4",
+              "description": "",
+              "destination": {
+                "node": "nd-9f47cdad1a"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-769e87f9a4",
+          "name": "Get_Start_City"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 705,
+          "y": -315,
+          "instructions": [
+            {
+              "type": "ai",
+              "id": "ins-d29b168d32",
+              "task": {
+                "instructions": "If the city is misspelled or close enought to real city write a correct city to variable CorrectCityEnd",
+                "input": "change the @workflow.CityEnd to be real city",
+                "outputVariableIds": [
+                  "var-33d307b874"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "krakw",
+                    "output": {
+                      "CorrectCityEnd": "krakow"
+                    }
+                  },
+                  {
+                    "input": "londn",
+                    "output": {
+                      "CorrectCityEnd": "london"
+                    }
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-61acf19c1e",
+              "label": "CorrectCityEnd",
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nIf the city is misspelled or close enought to real city write a correct city to variable CorrectCityEnd\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"CorrectCityEnd\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nkrakw\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CorrectCityEnd\":\"krakow\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nlondn\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CorrectCityEnd\":\"london\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0
+              }
+            },
+            {
+              "id": "ins-cbde7c90a5",
+              "tutorialId": "knowledge-query",
+              "description": "Retrieve answer & citations from Knowledge Bases to a custom query",
+              "title": "Query Knowledge Bases",
+              "schema": {
+                "_def": {
+                  "unknownKeys": "strip",
+                  "catchall": {
+                    "_def": {
+                      "typeName": "ZodNever"
+                    }
+                  },
+                  "typeName": "ZodObject"
+                },
+                "_cached": null
+              },
+              "uiconfiguration": {
+                "type": "VerticalLayout",
+                "elements": [
+                  {
+                    "type": "Input",
+                    "scope": "#/properties/query",
+                    "options": {
+                      "superInput": true
+                    }
+                  },
+                  {
+                    "type": "KBPicker",
+                    "label": "Knowledge Bases",
+                    "scope": "#/properties/kbs"
+                  },
+                  {
+                    "type": "VariablePicker",
+                    "label": "Store answer in variable",
+                    "scope": "#/properties/answerVariableId"
+                  }
+                ]
+              },
+              "type": "action",
+              "label": "Query Knowledge Bases",
+              "category": "Agents",
+              "origin": "agent",
+              "agent": {
+                "action": "knowledge-query",
+                "id": "KnowledgeAgent"
+              },
+              "nodeId": "nd-61acf19c1e",
+              "data": {
+                "query": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "is @workflow.CorrectCityEnd existing in the document answer to variable \"yes\" or \"no\""
+                },
+                "kbs": {
+                  "enabled": true,
+                  "kbs": [
+                    "kb-2e1848b79d"
+                  ],
+                  "searchScope": "specific"
+                },
+                "answerVariableId": "var-72df6bef2a"
+              },
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            },
+            {
+              "type": "ai",
+              "category": "AI",
+              "id": "ins-73368ecb50",
+              "task": {
+                "instructions": "Find the city code that is associated to the airport in standard IATA",
+                "input": "@workflow.CorrectCityEnd   find the City code associated to the airport IATA",
+                "outputVariableIds": [
+                  "var-2414d9aa20"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "",
+                    "output": {}
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-61acf19c1e",
+              "label": "CityEndCode",
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nFind the city code that is associated to the airport in standard IATA\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"CityEndCode\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo-16k",
+                "temperature": 0
+              }
+            },
+            {
+              "id": "ins-08c76a1dc5",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityEndCorrectKB.toLowerCase().includes(\"no\") || workflow.CityEndCorrectKB.toLowerCase().includes(\"nie\")"
+              },
+              "label": "If @workflow.CityEndCorrectKB contains \"no\" or \"nie\" regardless of Uppercase or \".\"",
+              "generative": {
+                "label": "If @workflow.CityEndCorrectKB contains \"no\" or \"nie\" regardless of Uppercase or \".\"",
+                "suggestion": {
+                  "condition": "workflow.CityEndCorrectKB.toLowerCase().includes(\"no\") || workflow.CityEndCorrectKB.toLowerCase().includes(\"nie\")"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-61acf19c1e",
+              "destination": {
+                "node": "nd-6dcb79b210"
+              },
+              "transitions": [],
+              "description": ""
+            },
+            {
+              "id": "ins-24d5a87e68",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityEndCorrectKB.toLowerCase().includes(\"yes\") || workflow.CityEndCorrectKB.toLowerCase().includes(\"tak\")"
+              },
+              "label": "If @workflow.CityEndCorrectKB contains \"yes\" or \"tak\" regardless of Uppercase or \".\"",
+              "generative": {
+                "label": "If @workflow.CityEndCorrectKB contains \"yes\" or \"tak\" regardless of Uppercase or \".\"",
+                "suggestion": {
+                  "condition": "workflow.CityEndCorrectKB.toLowerCase().includes(\"yes\") || workflow.CityEndCorrectKB.toLowerCase().includes(\"tak\")"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-61acf19c1e",
+              "description": "",
+              "destination": {
+                "node": "nd-4ee821abf7"
+              },
+              "transitions": []
+            },
+            {
+              "type": "ai",
+              "category": "AI",
+              "id": "ins-169ae010eb",
+              "task": {
+                "instructions": "Search if city or country provide by user is existing and its correct  answer simply by \"yes\" or \"no\" just that words",
+                "input": "Is @workflow.CorrectCityEnd correct?",
+                "outputVariableIds": [
+                  "var-72df6bef2a"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "Lublin",
+                    "output": {
+                      "CityEndCorrectKB": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "yes"
+                      }
+                    }
+                  },
+                  {
+                    "input": "Krakow",
+                    "output": {
+                      "CityEndCorrectKB": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "yes"
+                      }
+                    }
+                  },
+                  {
+                    "input": "Oslo",
+                    "output": {
+                      "CityEndCorrectKB": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "yes"
+                      }
+                    }
+                  }
+                ],
+                "model": "fast-model",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-61acf19c1e",
+              "label": "CityEndCorrectKB",
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nSearch if city or country provide by user is existing and its correct  answer simply by \"yes\" or \"no\" just that words\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"CityEndCorrectKB\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nLublin\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CityEndCorrectKB\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"yes\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nKrakow\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CityEndCorrectKB\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"yes\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nOslo\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"CityEndCorrectKB\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"yes\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "fast-model",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-61acf19c1e",
+          "name": "Get_End_City"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 1365,
+          "y": -315,
+          "instructions": [
+            {
+              "id": "ins-098a18b9e9",
+              "type": "capture",
+              "entityId": "prompts://DateTime/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-5aea8ee9ad",
+              "variableId": "var-16e72998d4",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Great! ✈️ When would you like to depart? Please provide the date you're planning to fly.",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"The current year is 2023 and we are in october. When do you want to get a notification about this?\" */\ninterface Output = { year: number; month: number; day: number; hours: number; minutes: number }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: The current year is 2023 and we are in october. When do you want to get a notification about this?\nuser: The 1st of next month at 8am please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"year\":2023,\"month\":11,\"day\":1,\"hours\":8,\"minutes\":0}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { year: number; month: number; day: number; hours: number; minutes: number }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0,
+                "signatureVersion": "Jan-2024",
+                "signature": "UnAkWhh4BKnwk1/kKK6c2iBRU74jfxDzqkeG1b4GUx1pTcUN2d0EaGIciRqFdmY/lvrgoEMr9GSKt/KVbBYv19e2b8c4ZBHPI9GUTSlYEL8isW9QUJxuzSm9izR2UyJfdDmKEue4Z+6NKPONolhT5fHKTSLQ6OmzcsyWc7aDfhAnB0xfJZUM+bPlGNLmDz42CcvnWWKz7dS9tQw489FL40k7vA5eBKxDXvkkGgH1Ehqy6cBnhhd31zFDVMlQzdshdgZy87el+fLlwUJEeHEEEUyKQEndJUCiKPtp8wWqGrezo/vGYhDkIzBkMOReS0Ft7u2xVCjSYXUEXAdpz7VqYQ=="
+              }
+            },
+            {
+              "id": "ins-493dc53e19",
+              "type": "action",
+              "code": "workflow.CurrentDate = new Date()\r\n",
+              "origin": "builtin",
+              "nodeId": "nd-5aea8ee9ad",
+              "label": "Set the current date in a workflow.",
+              "isCustomLabel": false,
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  workflow.CurrentDate = new Date();\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            },
+            {
+              "id": "ins-b44be54ddb",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.StartDate > workflow.CurrentDate"
+              },
+              "label": "if StartDate is more than CurrentDate",
+              "generative": {
+                "label": "if StartDate is more than CurrentDate",
+                "suggestion": {
+                  "condition": "workflow.StartDate > workflow.CurrentDate"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-5aea8ee9ad",
+              "destination": {
+                "node": "nd-a60f4b13bb"
+              },
+              "transitions": [],
+              "description": ""
+            },
+            {
+              "id": "ins-5b2046a638",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.StartDate < workflow.CurrentDate"
+              },
+              "label": "if startdate is less than currentdate",
+              "generative": {
+                "label": "if startdate is less than currentdate",
+                "suggestion": {
+                  "condition": "workflow.StartDate < workflow.CurrentDate"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-5aea8ee9ad",
+              "destination": {
+                "node": "nd-b7b17d17d6"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-5aea8ee9ad",
+          "name": "Set_Start_Date"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 1725,
+          "y": -465,
+          "instructions": [
+            {
+              "id": "ins-46f5323ef5",
+              "type": "capture",
+              "entityId": "prompts://DateTime/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-a60f4b13bb",
+              "variableId": "var-6de7c02e82",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Perfect! ✈️ When would you like to return? Please let me know your preferred return date.",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"The current year is 2023 and we are in october. When do you want to get a notification about this?\" */\ninterface Output = { year: number; month: number; day: number; hours: number; minutes: number }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: The current year is 2023 and we are in october. When do you want to get a notification about this?\nuser: The 1st of next month at 8am please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"year\":2023,\"month\":11,\"day\":1,\"hours\":8,\"minutes\":0}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { year: number; month: number; day: number; hours: number; minutes: number }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0,
+                "signatureVersion": "Jan-2024",
+                "signature": "UnAkWhh4BKnwk1/kKK6c2iBRU74jfxDzqkeG1b4GUx1pTcUN2d0EaGIciRqFdmY/lvrgoEMr9GSKt/KVbBYv19e2b8c4ZBHPI9GUTSlYEL8isW9QUJxuzSm9izR2UyJfdDmKEue4Z+6NKPONolhT5fHKTSLQ6OmzcsyWc7aDfhAnB0xfJZUM+bPlGNLmDz42CcvnWWKz7dS9tQw489FL40k7vA5eBKxDXvkkGgH1Ehqy6cBnhhd31zFDVMlQzdshdgZy87el+fLlwUJEeHEEEUyKQEndJUCiKPtp8wWqGrezo/vGYhDkIzBkMOReS0Ft7u2xVCjSYXUEXAdpz7VqYQ=="
+              }
+            },
+            {
+              "id": "ins-a6ff588328",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.EndDate < workflow.StartDate"
+              },
+              "label": "If EndDate is less than StartDate",
+              "generative": {
+                "label": "If EndDate is less than StartDate",
+                "suggestion": {
+                  "condition": "workflow.EndDate < workflow.StartDate"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-a60f4b13bb",
+              "destination": {
+                "node": "nd-2750ec4782"
+              },
+              "transitions": [],
+              "description": ""
+            },
+            {
+              "id": "ins-d3f6323e8d",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "label": "If EndDate is more than StartDate",
+              "generative": {
+                "label": "If EndDate is more than StartDate",
+                "suggestion": {
+                  "condition": "true"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-a60f4b13bb",
+              "destination": {
+                "node": "nd-a307d69ed1"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-a60f4b13bb",
+          "name": "Set_End_Date"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 1410,
+          "y": 30,
+          "instructions": [
+            {
+              "id": "ins-ad89c41af6",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Oops! 🚫 The date you entered doesn't seem to be valid. Could you please provide a valid departure date again?",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-b7b17d17d6",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-5aea8ee9ad"
+          },
+          "id": "nd-b7b17d17d6",
+          "name": "Date_Error"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 1725,
+          "y": -225,
+          "instructions": [
+            {
+              "id": "ins-6970f26bc4",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Oops! 🚫 The date you entered doesn't seem to be valid. Could you please provide a valid return date again?",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-2750ec4782",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-a60f4b13bb"
+          },
+          "id": "nd-2750ec4782",
+          "name": "Date_Error"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 1035,
+          "y": -195,
+          "instructions": [
+            {
+              "id": "ins-cfabbf9a33",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrect.toUpperCase() === workflow.CorrectCityEnd.toUpperCase()"
+              },
+              "label": "If CityStartCorrect is the same as CorrectCityEnd regardless of Upper cases",
+              "generative": {
+                "label": "If CityStartCorrect is the same as CorrectCityEnd regardless of Upper cases",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrect.toUpperCase() === workflow.CorrectCityEnd.toUpperCase()"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-4ee821abf7",
+              "destination": {
+                "node": "nd-6dcb79b210"
+              },
+              "transitions": [],
+              "description": ""
+            },
+            {
+              "id": "ins-85123d23a8",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.CityStartCorrect.toLowerCase() !== workflow.CorrectCityEnd.toLowerCase()"
+              },
+              "label": "If CityStartCorrect is not the same as CorrctCityEnd regardless of Upper cases",
+              "generative": {
+                "label": "If CityStartCorrect is not the same as CorrctCityEnd regardless of Upper cases",
+                "suggestion": {
+                  "condition": "workflow.CityStartCorrect.toLowerCase() !== workflow.CorrectCityEnd.toLowerCase()"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-4ee821abf7",
+              "destination": {
+                "node": "nd-efa3acea7a"
+              },
+              "transitions": [],
+              "description": ""
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-4ee821abf7",
+          "name": "Standard6"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 2505,
+          "y": -690,
+          "instructions": [
+            {
+              "id": "ins-df98b06676",
+              "type": "action",
+              "code": "// Funkcja do formatowania daty w formacie YYYY-MM-DD\r\nfunction formatDate(isoDate) {\r\n  const date = new Date(isoDate)\r\n  const year = date.getFullYear()\r\n  const month = String(date.getMonth() + 1).padStart(2, '0') // Miesiące zaczynają się od 0\r\n  const day = String(date.getDate()).padStart(2, '0')\r\n  return `${year}-${month}-${day}`\r\n}\r\n\r\n// Funkcja do pobrania tokena dostępu z obsługą ponownych prób w przypadku błędu 429\r\nasync function getAccessToken(retries = 10, delay = 1000) {\r\n  const url = 'https://test.api.amadeus.com/v1/security/oauth2/token'\r\n  const clientId = 'AUTriFncNibBEzCmpP87ySs3xkaMG0Al'\r\n  const clientSecret = 'lKtc4CAMG3A9iTyU'\r\n\r\n  const requestData = new URLSearchParams({\r\n    grant_type: 'client_credentials',\r\n    client_id: clientId,\r\n    client_secret: clientSecret\r\n  })\r\n\r\n  for (let attempt = 1; attempt <= retries; attempt++) {\r\n    try {\r\n      const response = await axios.post(url, requestData, {\r\n        headers: {\r\n          'Content-Type': 'application/x-www-form-urlencoded'\r\n        }\r\n      })\r\n      return response.data.access_token // Zwróć token, jeśli żądanie zakończy się sukcesem\r\n    } catch (error) {\r\n      if (error.response && error.response.status === 429 && attempt < retries) {\r\n        console.log(`Attempt ${attempt} failed with status 429. Retrying in ${delay} ms...`)\r\n        await new Promise((resolve) => setTimeout(resolve, delay)) // Opóźnienie przed kolejną próbą\r\n      } else {\r\n        console.error('Error retrieving access token:', error.response ? error.response.data : error.message)\r\n        workflow.NoOffers = 1 // Ustawiamy zmienną workflow.NoOffers na 1 w przypadku błędu\r\n        return null // Zwracamy null, aby kontynuować działanie bota\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\n// Funkcja do wyszukiwania ofert lotów\r\nasync function searchFlightOffers(\r\n  originLocationCode,\r\n  destinationLocationCode,\r\n  accessToken,\r\n  departureDate,\r\n  returnDate,\r\n  currencyCode\r\n) {\r\n  const url = 'https://test.api.amadeus.com/v2/shopping/flight-offers'\r\n\r\n  const requestData = {\r\n    originDestinations: [\r\n      {\r\n        id: '1',\r\n        originLocationCode: originLocationCode,\r\n        destinationLocationCode: destinationLocationCode,\r\n        departureDateTimeRange: {\r\n          date: departureDate,\r\n          timeRange: {\r\n            startTime: '00:00:00',\r\n            endTime: '23:59:59'\r\n          }\r\n        }\r\n      },\r\n      ...(returnDate\r\n        ? [\r\n            {\r\n              id: '2',\r\n              originLocationCode: destinationLocationCode,\r\n              destinationLocationCode: originLocationCode,\r\n              departureDateTimeRange: {\r\n                date: returnDate,\r\n                timeRange: {\r\n                  startTime: '00:00:00',\r\n                  endTime: '23:59:59'\r\n                }\r\n              }\r\n            }\r\n          ]\r\n        : [])\r\n    ],\r\n    travelers: [{ id: '1', travelerType: 'ADULT', fareOptions: ['STANDARD'] }],\r\n    sources: ['GDS'],\r\n    searchCriteria: {\r\n      maxFlightOffers: 3,\r\n      flightFilters: {\r\n        cabinRestrictions: [\r\n          { cabin: 'ECONOMY', coverage: 'MOST_SEGMENTS', originDestinationIds: ['1', ...(returnDate ? ['2'] : [])] }\r\n        ]\r\n      }\r\n    },\r\n    currencyCode: currencyCode\r\n  }\r\n\r\n  // Funkcja do wyszukiwania lotów\r\n  async function fetchFlights(nonStop) {\r\n    try {\r\n      const response = await axios.post(\r\n        url,\r\n        {\r\n          ...requestData,\r\n          searchCriteria: {\r\n            ...requestData.searchCriteria,\r\n            flightFilters: { ...requestData.searchCriteria.flightFilters, nonStop }\r\n          }\r\n        },\r\n        {\r\n          headers: {\r\n            Authorization: `Bearer ${accessToken}`,\r\n            'Content-Type': 'application/json'\r\n          }\r\n        }\r\n      )\r\n\r\n      console.log('API Response:', response.data)\r\n\r\n      if (!response.data || !response.data.data || response.data.data.length === 0) {\r\n        console.log('No flight offers found.')\r\n        workflow.NoOffers = 1 \r\n        return [] \r\n      }\r\n\r\n      const flights = response.data.data.map((flight) => {\r\n        const segments = flight.itineraries[0].segments\r\n        const numberOfStops = segments.length - 1\r\n\r\n        return {\r\n          numberOfStops: numberOfStops,\r\n          segments: segments.map((segment) => ({\r\n            departure: {\r\n              iataCode: segment.departure.iataCode,\r\n              at: segment.departure.at\r\n            },\r\n            arrival: {\r\n              iataCode: segment.arrival.iataCode,\r\n              at: segment.arrival.at\r\n            },\r\n            carrier: segment.carrierCode,\r\n            flightNumber: segment.number\r\n          })),\r\n          price: flight.price.total\r\n        }\r\n      })\r\n\r\n      return flights\r\n    } catch (error) {\r\n      console.error('Error searching for flights:', error.response ? error.response.data : error.message)\r\n      workflow.NoOffers = 1\r\n      return [] \r\n    }\r\n  }\r\n////\r\n  let flightOffers = await fetchFlights(true)\r\n\r\n  if (flightOffers.length === 0) {\r\n    console.log('No non-stop flights found. Searching for flights with one stop...')\r\n    flightOffers = await fetchFlights(false)\r\n    workflow.NoStopFlight = 1 // Zmienna NoStopFlight ustawiana na 1, gdy brak non-stop lotów\r\n  }\r\n\r\n  return flightOffers\r\n}\r\n\r\n// Główna funkcja wykonująca akcje\r\nasync function main(event) {\r\n  try {\r\n    const accessToken = await getAccessToken()\r\n    if (!accessToken) {\r\n      // Jeśli nie udało się pobrać tokenu, przejdź dalej\r\n      workflow.NoOffers = 1\r\n      return []\r\n    }\r\n\r\n    const originLocationCode = workflow.CityStartCode\r\n    const destinationLocationCode = workflow.CityEndCode\r\n    const departureDate = formatDate(workflow.StartDate)\r\n    const returnDate = workflow.EndDate ? formatDate(workflow.EndDate) : null\r\n    const currencyCode = workflow.CurrencyCode\r\n\r\n    const results = await searchFlightOffers(\r\n      originLocationCode,\r\n      destinationLocationCode,\r\n      accessToken,\r\n      departureDate,\r\n      returnDate,\r\n      currencyCode\r\n    )\r\n\r\n    event.state.session.flightResults = results\r\n\r\n    console.log(`Flight offers from ${originLocationCode} to ${destinationLocationCode}:`)\r\n    if (results.length > 0) {\r\n      results.forEach((offer, index) => {\r\n        const flightIndex = index + 1 // Użyjemy indeksu lotu (1, 2, 3...)\r\n\r\n        // Upewnij się, że nie przekraczamy limitu zmiennych w workflow\r\n        if (flightIndex > 10) {\r\n          // Możesz zmienić ten limit, jeśli chcesz więcej zmiennych\r\n          console.log('Maximum number of flights reached. Skipping the rest.')\r\n          return\r\n        }\r\n\r\n        const segments = offer.segments // Pobierz segmenty danego lotu\r\n\r\n        // Przypisz miejsce początkowe (pierwszy segment)\r\n        workflow[`StartCity${flightIndex}`] = segments[0].departure.iataCode\r\n        workflow[`Date${flightIndex}`] = segments[0].departure.at // Data i czas odlotu\r\n\r\n        // Przypisz miejsce docelowe (ostatni segment)\r\n        const lastSegment = segments[segments.length - 1]\r\n        workflow[`EndCity${flightIndex}`] = lastSegment.arrival.iataCode\r\n\r\n        // Przypisz cenę całkowitą\r\n        workflow[`PriceStart${flightIndex}`] = offer.price\r\n\r\n        console.log(`Saved flight ${flightIndex}:`)\r\n        console.log(`Start City: ${workflow[`StartCity${flightIndex}`]}`)\r\n        console.log(`End City: ${workflow[`EndCity${flightIndex}`]}`)\r\n        console.log(`Date: ${workflow[`Date${flightIndex}`]}`)\r\n        console.log(`Price: ${workflow[`PriceStart${flightIndex}`]}`)\r\n      })\r\n\r\n      // Zapisz liczbę lotów do zmiennej workflow.FlightNumber\r\n      workflow.FlightNumber = results.length\r\n      console.log(`Total number of flights: ${workflow.FlightNumber}`)\r\n    } else {\r\n      console.log('No flight offers found to save to workflow variables.')\r\n      workflow.NoOffers = 1 // Ustaw zmienną na brak ofert\r\n    }\r\n\r\n    if (results.length > 0) {\r\n      const firstOffer = results[0]\r\n      workflow.PriceStart = firstOffer.price\r\n    }\r\n\r\n    return results\r\n  } catch (error) {\r\n    console.error('Error in main function:', error.response ? error.response.data : error.message)\r\n    workflow.NoOffers = 1 // W przypadku błędu ustawiamy NoOffers na 1\r\n    return [] // Zwróć pustą tablicę, aby kontynuować działanie bota\r\n  }\r\n}\r\n\r\nreturn main(event)\r\n",
+              "origin": "builtin",
+              "category": "Execute",
+              "nodeId": "nd-0e98d2a96d",
+              "label": "Function to Search Flight Offers and Retrieve Access Token",
+              "isCustomLabel": false,
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  function formatDate(isoDate) {\n    const date = new Date(isoDate);\n    const year = date.getFullYear();\n    const month = String(date.getMonth() + 1).padStart(2, \"0\");\n    const day = String(date.getDate()).padStart(2, \"0\");\n    return `${year}-${month}-${day}`;\n  }\n  __name(formatDate, \"formatDate\");\n  async function getAccessToken(retries = 10, delay = 1e3) {\n    const url = \"https://test.api.amadeus.com/v1/security/oauth2/token\";\n    const clientId = \"AUTriFncNibBEzCmpP87ySs3xkaMG0Al\";\n    const clientSecret = \"lKtc4CAMG3A9iTyU\";\n    const requestData = new URLSearchParams({\n      grant_type: \"client_credentials\",\n      client_id: clientId,\n      client_secret: clientSecret\n    });\n    for (let attempt = 1; attempt <= retries; attempt++) {\n      try {\n        const response = await axios.post(url, requestData, {\n          headers: {\n            \"Content-Type\": \"application/x-www-form-urlencoded\"\n          }\n        });\n        return response.data.access_token;\n      } catch (error) {\n        if (error.response && error.response.status === 429 && attempt < retries) {\n          console.log(`Attempt ${attempt} failed with status 429. Retrying in ${delay} ms...`);\n          await new Promise((resolve) => setTimeout(resolve, delay));\n        } else {\n          console.error(\"Error retrieving access token:\", error.response ? error.response.data : error.message);\n          workflow.NoOffers = 1;\n          return null;\n        }\n      }\n    }\n  }\n  __name(getAccessToken, \"getAccessToken\");\n  async function searchFlightOffers(originLocationCode, destinationLocationCode, accessToken, departureDate, returnDate, currencyCode) {\n    const url = \"https://test.api.amadeus.com/v2/shopping/flight-offers\";\n    const requestData = {\n      originDestinations: [\n        {\n          id: \"1\",\n          originLocationCode,\n          destinationLocationCode,\n          departureDateTimeRange: {\n            date: departureDate,\n            timeRange: {\n              startTime: \"00:00:00\",\n              endTime: \"23:59:59\"\n            }\n          }\n        },\n        ...returnDate ? [\n          {\n            id: \"2\",\n            originLocationCode: destinationLocationCode,\n            destinationLocationCode: originLocationCode,\n            departureDateTimeRange: {\n              date: returnDate,\n              timeRange: {\n                startTime: \"00:00:00\",\n                endTime: \"23:59:59\"\n              }\n            }\n          }\n        ] : []\n      ],\n      travelers: [{ id: \"1\", travelerType: \"ADULT\", fareOptions: [\"STANDARD\"] }],\n      sources: [\"GDS\"],\n      searchCriteria: {\n        maxFlightOffers: 3,\n        flightFilters: {\n          cabinRestrictions: [\n            { cabin: \"ECONOMY\", coverage: \"MOST_SEGMENTS\", originDestinationIds: [\"1\", ...returnDate ? [\"2\"] : []] }\n          ]\n        }\n      },\n      currencyCode\n    };\n    async function fetchFlights(nonStop) {\n      try {\n        const response = await axios.post(\n          url,\n          {\n            ...requestData,\n            searchCriteria: {\n              ...requestData.searchCriteria,\n              flightFilters: { ...requestData.searchCriteria.flightFilters, nonStop }\n            }\n          },\n          {\n            headers: {\n              Authorization: `Bearer ${accessToken}`,\n              \"Content-Type\": \"application/json\"\n            }\n          }\n        );\n        console.log(\"API Response:\", response.data);\n        if (!response.data || !response.data.data || response.data.data.length === 0) {\n          console.log(\"No flight offers found.\");\n          workflow.NoOffers = 1;\n          return [];\n        }\n        const flights = response.data.data.map((flight) => {\n          const segments = flight.itineraries[0].segments;\n          const numberOfStops = segments.length - 1;\n          return {\n            numberOfStops,\n            segments: segments.map((segment) => ({\n              departure: {\n                iataCode: segment.departure.iataCode,\n                at: segment.departure.at\n              },\n              arrival: {\n                iataCode: segment.arrival.iataCode,\n                at: segment.arrival.at\n              },\n              carrier: segment.carrierCode,\n              flightNumber: segment.number\n            })),\n            price: flight.price.total\n          };\n        });\n        return flights;\n      } catch (error) {\n        console.error(\"Error searching for flights:\", error.response ? error.response.data : error.message);\n        workflow.NoOffers = 1;\n        return [];\n      }\n    }\n    __name(fetchFlights, \"fetchFlights\");\n    let flightOffers = await fetchFlights(true);\n    if (flightOffers.length === 0) {\n      console.log(\"No non-stop flights found. Searching for flights with one stop...\");\n      flightOffers = await fetchFlights(false);\n      workflow.NoStopFlight = 1;\n    }\n    return flightOffers;\n  }\n  __name(searchFlightOffers, \"searchFlightOffers\");\n  async function main(event2) {\n    try {\n      const accessToken = await getAccessToken();\n      if (!accessToken) {\n        workflow.NoOffers = 1;\n        return [];\n      }\n      const originLocationCode = workflow.CityStartCode;\n      const destinationLocationCode = workflow.CityEndCode;\n      const departureDate = formatDate(workflow.StartDate);\n      const returnDate = workflow.EndDate ? formatDate(workflow.EndDate) : null;\n      const currencyCode = workflow.CurrencyCode;\n      const results = await searchFlightOffers(\n        originLocationCode,\n        destinationLocationCode,\n        accessToken,\n        departureDate,\n        returnDate,\n        currencyCode\n      );\n      event2.state.session.flightResults = results;\n      console.log(`Flight offers from ${originLocationCode} to ${destinationLocationCode}:`);\n      if (results.length > 0) {\n        results.forEach((offer, index) => {\n          const flightIndex = index + 1;\n          if (flightIndex > 10) {\n            console.log(\"Maximum number of flights reached. Skipping the rest.\");\n            return;\n          }\n          const segments = offer.segments;\n          workflow[`StartCity${flightIndex}`] = segments[0].departure.iataCode;\n          workflow[`Date${flightIndex}`] = segments[0].departure.at;\n          const lastSegment = segments[segments.length - 1];\n          workflow[`EndCity${flightIndex}`] = lastSegment.arrival.iataCode;\n          workflow[`PriceStart${flightIndex}`] = offer.price;\n          console.log(`Saved flight ${flightIndex}:`);\n          console.log(`Start City: ${workflow[`StartCity${flightIndex}`]}`);\n          console.log(`End City: ${workflow[`EndCity${flightIndex}`]}`);\n          console.log(`Date: ${workflow[`Date${flightIndex}`]}`);\n          console.log(`Price: ${workflow[`PriceStart${flightIndex}`]}`);\n        });\n        workflow.FlightNumber = results.length;\n        console.log(`Total number of flights: ${workflow.FlightNumber}`);\n      } else {\n        console.log(\"No flight offers found to save to workflow variables.\");\n        workflow.NoOffers = 1;\n      }\n      if (results.length > 0) {\n        const firstOffer = results[0];\n        workflow.PriceStart = firstOffer.price;\n      }\n      return results;\n    } catch (error) {\n      console.error(\"Error in main function:\", error.response ? error.response.data : error.message);\n      workflow.NoOffers = 1;\n      return [];\n    }\n  }\n  __name(main, \"main\");\n  return main(event);\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            },
+            {
+              "id": "ins-b71181e921",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.PriceStart > 0"
+              },
+              "label": "if PriceStart is greater than 0",
+              "generative": {
+                "label": "if PriceStart is greater than 0",
+                "suggestion": {
+                  "condition": "workflow.PriceStart > 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-0e98d2a96d",
+              "description": "",
+              "destination": {
+                "node": "nd-d87c94de22"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-2f82f9def2",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.PriceStart <= 0"
+              },
+              "label": "if PriceStart is lesser or equal0",
+              "generative": {
+                "label": "if PriceStart is lesser or equal0",
+                "suggestion": {
+                  "condition": "workflow.PriceStart <= 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "nodeId": "nd-0e98d2a96d",
+              "description": "",
+              "destination": {
+                "node": "nd-635f484792"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-0e98d2a96d",
+          "name": "Api_Call"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 4815,
+          "y": -885,
+          "instructions": [
+            {
+              "id": "ins-9514e2fd14",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 1\nPrice: @workflow.PriceStart1  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity1 To: @workflow.EndCity1\nDate:  @workflow.Date1\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-05101898cb",
+              "transitions": []
+            },
+            {
+              "id": "crd-0f6204f3a5",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 2\nPrice: @workflow.PriceStart2  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity2 To: @workflow.EndCity2\nDate:  @workflow.Date2\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-05101898cb",
+              "transitions": []
+            },
+            {
+              "id": "ins-016a940eca",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 3\nPrice: @workflow.PriceStart3  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity3 To: @workflow.EndCity3\nDate:  @workflow.Date3\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-05101898cb",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-80ac4ff158"
+          },
+          "id": "nd-05101898cb",
+          "name": "Standard1"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": -615,
+          "y": -300,
+          "instructions": [
+            {
+              "id": "ins-d8ece901ff",
+              "type": "capture",
+              "entityId": "prompts://SingleChoice/v1",
+              "entityName": "Multiple Choice",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-842da2676e",
+              "variableId": "var-6f00e5534d",
+              "question": {
+                "staticValue": "",
+                "dynamicValue": "To make things easier, please select your preferred currency for flight prices from the list below",
+                "valueType": "dynamic"
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "valueType": "static",
+                  "staticValue": [
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "PLN - Polish Złoty"
+                      },
+                      "value": "PLN - Polish Złoty",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "USD - US Dollar"
+                      },
+                      "value": "USD - US Dollar",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "EUR - Euro"
+                      },
+                      "value": "EUR - Euro",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "GBP - British Pound"
+                      },
+                      "value": "GBP - British Pound",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Other"
+                      },
+                      "value": "Other",
+                      "enabled": true
+                    }
+                  ],
+                  "dynamicValue": ""
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [
+                {
+                  "id": "trs-14e3f5d5c3",
+                  "type": "transition",
+                  "label": "PLN - Polish Złoty",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=PLN - Polish Złoty"
+                  },
+                  "destination": {
+                    "node": "nd-e93ddc7ce5"
+                  }
+                },
+                {
+                  "id": "trs-a0cef9f5bf",
+                  "type": "transition",
+                  "label": "USD - US Dollar",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=USD - US Dollar"
+                  },
+                  "destination": {
+                    "node": "nd-e93ddc7ce5"
+                  }
+                },
+                {
+                  "id": "trs-374100c897",
+                  "type": "transition",
+                  "label": "EUR - Euro",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=EUR - Euro"
+                  },
+                  "destination": {
+                    "node": "nd-e93ddc7ce5"
+                  }
+                },
+                {
+                  "id": "trs-f74dcf376e",
+                  "type": "transition",
+                  "label": "GBP - British Pound",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=GBP - British Pound"
+                  },
+                  "destination": {
+                    "node": "nd-e93ddc7ce5"
+                  }
+                },
+                {
+                  "id": "trs-17e5e27a1f",
+                  "type": "transition",
+                  "label": "Other",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=Other"
+                  },
+                  "destination": {
+                    "node": "nd-0cfe8edd15"
+                  }
+                }
+              ],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\nuser: I will go with the second one please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"choice\":\"Yellow Apple\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-842da2676e",
+          "name": "Get_CurrencyCode"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 3090,
+          "y": -885,
+          "instructions": [
+            {
+              "id": "ins-146e17b122",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.NumberOfStops === 0 && workflow.NoStopFlight === 0 && workflow.MaxNumberOfStops === 0"
+              },
+              "label": "If NumberOfStops is equal 0 and nostopflight is equal to 0 And MaxNumberOfStops is 0",
+              "generative": {
+                "label": "If NumberOfStops is equal 0 and nostopflight is equal to 0 And MaxNumberOfStops is 0",
+                "suggestion": {
+                  "condition": "workflow.NumberOfStops === 0 && workflow.NoStopFlight === 0 && workflow.MaxNumberOfStops === 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-34e2ffac7b"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-7f34754644",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "(event.workflow.NoStopFlight === 1 || event.workflow.NumberOfStops > 0) && event.workflow.MaxNumberOfStops === 0"
+              },
+              "label": "(If noStopFlight is 1 or numberOfstops is more than 0)and max numberofstops is  0",
+              "generative": {
+                "label": "(If noStopFlight is 1 or numberOfstops is more than 0)and max numberofstops is  0",
+                "suggestion": {
+                  "condition": "(event.workflow.NoStopFlight === 1 || event.workflow.NumberOfStops > 0) && event.workflow.MaxNumberOfStops === 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-635f484792"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-db931f83dd",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.MaxNumberOfStops === 1 && workflow.NumberOfStops > 1"
+              },
+              "label": "If MaxNumberOfStops is 1 and NumbeOfStops is more than 1",
+              "generative": {
+                "label": "If MaxNumberOfStops is 1 and NumbeOfStops is more than 1",
+                "suggestion": {
+                  "condition": "workflow.MaxNumberOfStops === 1 && workflow.NumberOfStops > 1"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-635f484792"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-89deb2d7e6",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.MaxNumberOfStops === 1 && workflow.NumberOfStops <= 1"
+              },
+              "label": "If MaxNumber of stops is 1 and NumberOfStops is equal or less than 1",
+              "generative": {
+                "label": "If MaxNumber of stops is 1 and NumberOfStops is equal or less than 1",
+                "suggestion": {
+                  "condition": "workflow.MaxNumberOfStops === 1 && workflow.NumberOfStops <= 1"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-34e2ffac7b"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-8841424487",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.MaxNumberOfStops > 2 && workflow.NumberOfStops >= 0"
+              },
+              "label": "If MaxNumberOfstops is more than 2 and NumberOfStops is equal or more than 0",
+              "generative": {
+                "label": "If MaxNumberOfstops is more than 2 and NumberOfStops is equal or more than 0",
+                "suggestion": {
+                  "condition": "workflow.MaxNumberOfStops > 2 && workflow.NumberOfStops >= 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-34e2ffac7b"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-4cec97b4cb",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.NoOffers === 1"
+              },
+              "label": "If nooffers is 1",
+              "generative": {
+                "label": "If nooffers is 1",
+                "suggestion": {
+                  "condition": "workflow.NoOffers === 1"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-635f484792"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-abff60a938",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.MaxNumberOfStops === 0 && workflow.NumberOfStops > 0"
+              },
+              "label": "If maxnumberofstops is 0 and numberofstops is more than 0",
+              "generative": {
+                "label": "If maxnumberofstops is 0 and numberofstops is more than 0",
+                "suggestion": {
+                  "condition": "workflow.MaxNumberOfStops === 0 && workflow.NumberOfStops > 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-635f484792"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-c040883137",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "label": "always",
+              "generative": {
+                "label": "always",
+                "suggestion": {
+                  "condition": "true"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-d87c94de22",
+              "description": "",
+              "destination": {
+                "node": "nd-34e2ffac7b"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-d87c94de22",
+          "name": "Standard2"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 3465,
+          "y": -600,
+          "instructions": [
+            {
+              "id": "ins-9c08c3e447",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://MultiChoice/v1",
+              "entityName": "Multiple Choice",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-635f484792",
+              "question": {
+                "staticValue": "",
+                "dynamicValue": "Unfortunately, we couldn’t find any flights based on your search. 😞 Would you like to",
+                "valueType": "dynamic"
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "valueType": "static",
+                  "staticValue": [
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Change departure or return city"
+                      },
+                      "value": "Change departure or return city",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Adjust travel dates"
+                      },
+                      "value": "Adjust travel dates",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Modify the number of layovers"
+                      },
+                      "value": "Modify the number of layovers",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "End"
+                      },
+                      "value": "End",
+                      "enabled": true
+                    }
+                  ],
+                  "dynamicValue": ""
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [
+                {
+                  "id": "trs-5de89bc8e9",
+                  "type": "transition",
+                  "label": "Change departure or return city",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=Change departure or return city"
+                  },
+                  "destination": {
+                    "node": "nd-5a5629c489"
+                  }
+                },
+                {
+                  "id": "trs-b7ffca5ae7",
+                  "type": "transition",
+                  "label": "Adjust travel dates",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=Adjust travel dates"
+                  },
+                  "destination": {
+                    "node": "nd-1e323169d1"
+                  }
+                },
+                {
+                  "id": "trs-460b6683a1",
+                  "type": "transition",
+                  "label": "Modify the number of layovers",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=Modify the number of layovers"
+                  },
+                  "destination": {
+                    "node": "nd-bc04bed5a3"
+                  }
+                },
+                {
+                  "id": "trs-a6bd0c0460",
+                  "type": "transition",
+                  "label": "End",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=End"
+                  },
+                  "destination": {
+                    "node": "nd-80ac4ff158"
+                  }
+                }
+              ],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\" */\ninterface Output = { choices: Array<{{CHOICES_TYPINGS}}> }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\nuser: I will go with the second one and the banana please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"choices\":[\"Yellow Apple\",\"Dark Banana\"]}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { choices: Array<{{CHOICES_TYPINGS}}> }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-635f484792",
+          "name": "Standard8"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 2295,
+          "y": 90,
+          "instructions": [
+            {
+              "id": "ins-0657237e9c",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://MultiChoice/v1",
+              "entityName": "Multiple Choice",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-bc04bed5a3",
+              "variableId": "var-f369c8e279",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Great! 🌍 How many layovers would you prefer? Let me know your maximum number of stops.",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "valueType": "static",
+                  "staticValue": [
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "0"
+                      },
+                      "value": "0",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "1"
+                      },
+                      "value": "1",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "2"
+                      },
+                      "value": "2",
+                      "enabled": true
+                    }
+                  ],
+                  "dynamicValue": ""
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [
+                {
+                  "id": "trs-2e77e219b1",
+                  "type": "transition",
+                  "label": "0",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=0"
+                  },
+                  "destination": {
+                    "node": "nd-0e98d2a96d"
+                  }
+                },
+                {
+                  "id": "trs-b846219dc4",
+                  "type": "transition",
+                  "label": "1",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=1"
+                  },
+                  "destination": {
+                    "node": "nd-0e98d2a96d"
+                  }
+                },
+                {
+                  "id": "trs-36b81e6553",
+                  "type": "transition",
+                  "label": "2",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=2"
+                  },
+                  "destination": {
+                    "node": "nd-0e98d2a96d"
+                  }
+                }
+              ],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\" */\ninterface Output = { choices: Array<{{CHOICES_TYPINGS}}> }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\nuser: I will go with the second one and the banana please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"choices\":[\"Yellow Apple\",\"Dark Banana\"]}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { choices: Array<{{CHOICES_TYPINGS}}> }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-bc04bed5a3",
+          "name": "Standard9"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 3855,
+          "y": -750,
+          "instructions": [
+            {
+              "id": "ins-71a2f831f2",
+              "type": "action",
+              "category": "Execute",
+              "code": "workflow.ChangeData = 1\r\n",
+              "origin": "builtin",
+              "nodeId": "nd-1e323169d1",
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  workflow.ChangeData = 1;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-5aea8ee9ad"
+          },
+          "id": "nd-1e323169d1",
+          "name": "Standard10"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 2115,
+          "y": -240,
+          "instructions": [
+            {
+              "id": "ins-0a534f58f8",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "!workflow.ChangeData || workflow.ChangeData === 0"
+              },
+              "label": "If changeData is not set or 0",
+              "generative": {
+                "label": "If changeData is not set or 0",
+                "suggestion": {
+                  "condition": "!workflow.ChangeData || workflow.ChangeData === 0"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-a307d69ed1",
+              "description": "",
+              "destination": {
+                "node": "nd-bc04bed5a3"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-6dc0cf780e",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.ChangeData >= 1"
+              },
+              "label": "If changeData is 1 or more than 1",
+              "generative": {
+                "label": "If changeData is 1 or more than 1",
+                "suggestion": {
+                  "condition": "workflow.ChangeData >= 1"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-a307d69ed1",
+              "description": "",
+              "destination": {
+                "node": "nd-0e98d2a96d"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-a307d69ed1",
+          "name": "Standard11"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 3840,
+          "y": -450,
+          "instructions": [
+            {
+              "id": "ins-0f5b9e5b9a",
+              "type": "action",
+              "category": "Execute",
+              "code": "workflow.ChangeCity = 1\r\n",
+              "origin": "builtin",
+              "nodeId": "nd-5a5629c489",
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  workflow.ChangeCity = 1;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-769e87f9a4"
+          },
+          "id": "nd-5a5629c489",
+          "name": "Standard12"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 990,
+          "y": 120,
+          "instructions": [
+            {
+              "id": "ins-8b179c3fec",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.ChangeCity === 0 || !workflow.ChangeCity"
+              },
+              "label": "If changeCity is 0 or not set",
+              "generative": {
+                "label": "If changeCity is 0 or not set",
+                "suggestion": {
+                  "condition": "workflow.ChangeCity === 0 || !workflow.ChangeCity"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-efa3acea7a",
+              "description": "",
+              "destination": {
+                "node": "nd-5aea8ee9ad"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-8c39859378",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.ChangeCity >= 1"
+              },
+              "label": "If ChangeCity is equal to 1 or more",
+              "generative": {
+                "label": "If ChangeCity is equal to 1 or more",
+                "suggestion": {
+                  "condition": "workflow.ChangeCity >= 1"
+                },
+                "properties": {
+                  "condition": true
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-efa3acea7a",
+              "description": "",
+              "destination": {
+                "node": "nd-0e98d2a96d"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-efa3acea7a",
+          "name": "Standard13"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 45,
+          "y": 240,
+          "instructions": [
+            {
+              "id": "ins-7eea1a14d1",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://RawInput/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-9f47cdad1a",
+              "variableId": "var-d4c6a74cd1",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Can you describe the type of destination you have in mind? Whether it’s a relaxing beach, a bustling city, or something else, I’ll help you find the perfect place.",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"undefined\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: undefined\nuser: undefined\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            },
+            {
+              "type": "ai",
+              "category": "AI",
+              "id": "ins-370298d48b",
+              "task": {
+                "instructions": "Match the ideal city with airport, based on the description give only 1 answer without \"valueType\"",
+                "input": " @workflow.UserCityDescribe",
+                "outputVariableIds": [
+                  "var-d405f0fb15",
+                  "var-c93d33b2e7",
+                  "var-be43a1a95f",
+                  "var-07318014da",
+                  "var-f53d429b01",
+                  "var-24a01ced15"
+                ],
+                "handleFailure": false,
+                "examples": [
+                  {
+                    "input": "I want to visit a warm destination where I can access the beach, it will be relatively inexpensive, and I can communicate in English.",
+                    "output": {
+                      "City1": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Lisbon"
+                      },
+                      "City2": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Malaga"
+                      },
+                      "City3": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Dubaj"
+                      },
+                      "City4": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Phuket"
+                      },
+                      "City5": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Cancún"
+                      },
+                      "City6": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Valletta"
+                      }
+                    }
+                  },
+                  {
+                    "input": "I'm looking for a vibrant city with warm weather, access to cultural experiences, affordable dining options, and where English is commonly spoken.",
+                    "output": {
+                      "City1": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Barcelona"
+                      },
+                      "City2": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Kuala Lumpur"
+                      },
+                      "City3": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Cape Town"
+                      },
+                      "City4": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Istanbul"
+                      },
+                      "City5": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Athens"
+                      },
+                      "City6": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Bangkok"
+                      }
+                    }
+                  },
+                  {
+                    "input": "I'm interested in a peaceful destination with warm weather, beautiful nature, affordable accommodations, and where I can easily communicate in English.",
+                    "output": {
+                      "City2": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Langkawi"
+                      },
+                      "City3": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Madeira"
+                      },
+                      "City4": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Kerala"
+                      },
+                      "City5": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Rotorua"
+                      },
+                      "City6": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Belize"
+                      },
+                      "City1": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Hoi An"
+                      }
+                    }
+                  }
+                ],
+                "model": "fast-model",
+                "temperature": 0,
+                "version": "1.0"
+              },
+              "nodeId": "nd-9f47cdad1a",
+              "transitions": [],
+              "label": "City2, City3, City4, City5, City6, City1",
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are a helper assistant at the hands of a chatbot developer using Botpress workflow editor. Your main goal is to generate useful content in JSON format for the developer to use.\nHere are the task instructions provided by the developer:"
+                  },
+                  {
+                    "role": "user",
+                    "content": "I have a task for you to complete. Here are the instructions:\nMatch the ideal city with airport, based on the description give only 1 answer without \"valueType\"\n--\nThe following is the typescript interface I need as output of the task:\n\n```typescript\ninterface Output = {\n  /**  */\n\"City2\": string\n/**  */\n\"City3\": string\n/**  */\n\"City4\": string\n/**  */\n\"City5\": string\n/**  */\n\"City6\": string\n/**  */\n\"City1\": string\n}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nI want to visit a warm destination where I can access the beach, it will be relatively inexpensive, and I can communicate in English.\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"City1\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Lisbon\"},\"City2\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Malaga\"},\"City3\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Dubaj\"},\"City4\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Phuket\"},\"City5\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Cancún\"},\"City6\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Valletta\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nI'm looking for a vibrant city with warm weather, access to cultural experiences, affordable dining options, and where English is commonly spoken.\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"City1\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Barcelona\"},\"City2\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Kuala Lumpur\"},\"City3\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Cape Town\"},\"City4\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Istanbul\"},\"City5\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Athens\"},\"City6\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Bangkok\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Here is an example of input I need to process:\nInput:\n\n\"\"\"\nI'm interested in a peaceful destination with warm weather, beautiful nature, affordable accommodations, and where I can easily communicate in English.\n\"\"\"\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"City2\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Langkawi\"},\"City3\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Madeira\"},\"City4\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Kerala\"},\"City5\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Rotorua\"},\"City6\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Belize\"},\"City1\":{\"valueType\":\"dynamic\",\"dynamicValue\":\"Hoi An\"}}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "Now, here is the actual input to the task at hand you need to complete:\nInput:\n\"\"\"\n{{TASK_INPUT}}\n\"\"\"\nPlease follow my instructions as is and complete the task by filling the output JSON below with the correct values. Your answer must strictly respect the typescript typings.\nYou don't have to explain your answer and remember I need valid JSON as output.\n\nI need to generate the following output:\n\n```typescript\nconst output: Output = JSON.parse(<<json_output>>)\n```\n\nYour answer must strictly respect the typescript typings.\nHow would you write <<json_output>> ?\nAnswer with JSON and only JSON. Don't explain your answer, just JSON."
+                  }
+                ],
+                "model": "fast-model",
+                "temperature": 0
+              }
+            },
+            {
+              "id": "ins-094b13f314",
+              "type": "action",
+              "category": "Execute",
+              "code": "workflow.City1 = workflow.City1.dynamicValue\r\nworkflow.City2 = workflow.City2.dynamicValue\r\nworkflow.City3 = workflow.City3.dynamicValue\r\nworkflow.City4 = workflow.City4.dynamicValue\r\nworkflow.City5 = workflow.City5.dynamicValue\r\nworkflow.City6 = workflow.City6.dynamicValue\r\n",
+              "origin": "builtin",
+              "label": "Update workflow values for multiple cities using dynamic values.",
+              "nodeId": "nd-9f47cdad1a",
+              "isCustomLabel": false,
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  workflow.City1 = workflow.City1.dynamicValue;\n  workflow.City2 = workflow.City2.dynamicValue;\n  workflow.City3 = workflow.City3.dynamicValue;\n  workflow.City4 = workflow.City4.dynamicValue;\n  workflow.City5 = workflow.City5.dynamicValue;\n  workflow.City6 = workflow.City6.dynamicValue;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            },
+            {
+              "id": "ins-ca3c37ff3b",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-9f47cdad1a",
+              "generative": {
+                "properties": {
+                  "condition": true
+                },
+                "suggestion": {},
+                "label": ""
+              },
+              "label": "",
+              "description": "",
+              "destination": {
+                "node": "nd-059dbd196f"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-9f47cdad1a",
+          "name": "Dont_Know_Where_To_Go"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 660,
+          "y": 210,
+          "instructions": [
+            {
+              "id": "ins-03cbb01936",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://SingleChoice/v1",
+              "entityName": "Single Choice",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-059dbd196f",
+              "variableId": "var-76d951173b",
+              "question": {
+                "staticValue": "",
+                "dynamicValue": "Make a choice from the list below",
+                "valueType": "dynamic"
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "valueType": "static",
+                  "staticValue": [
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City1"
+                      },
+                      "value": "@workflow.City1",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City2"
+                      },
+                      "value": "@workflow.City2",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City3"
+                      },
+                      "value": "@workflow.City3",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City4"
+                      },
+                      "value": "@workflow.City4",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City5"
+                      },
+                      "value": "@workflow.City5",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "@workflow.City6"
+                      },
+                      "value": "@workflow.City6",
+                      "enabled": true
+                    }
+                  ],
+                  "dynamicValue": ""
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [
+                {
+                  "id": "trs-271a9aa79b",
+                  "type": "transition",
+                  "label": "@workflow.City1",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City1"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                },
+                {
+                  "id": "trs-a00893be0e",
+                  "type": "transition",
+                  "label": "@workflow.City2",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City2"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                },
+                {
+                  "id": "trs-81e81e69bf",
+                  "type": "transition",
+                  "label": "@workflow.City3",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City3"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                },
+                {
+                  "id": "trs-55abe60b23",
+                  "type": "transition",
+                  "label": "@workflow.City4",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City4"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                },
+                {
+                  "id": "trs-41d04899f1",
+                  "type": "transition",
+                  "label": "@workflow.City5",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City5"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                },
+                {
+                  "id": "trs-2214df1bb6",
+                  "type": "transition",
+                  "label": "@workflow.City6",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=@workflow.City6"
+                  },
+                  "destination": {
+                    "node": "nd-61acf19c1e"
+                  }
+                }
+              ],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\nuser: I will go with the second one please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"choice\":\"Yellow Apple\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-059dbd196f",
+          "name": "Standard16"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": -45,
+          "y": -390,
+          "instructions": [
+            {
+              "id": "ins-91060becb1",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://SingleChoice/v1",
+              "entityName": "Single Choice",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-b32c21c042",
+              "variableId": "var-1ff07da127",
+              "question": {
+                "staticValue": "",
+                "dynamicValue": "Great! 🌍 Now that we’re set, can you tell me where you'd like to go? Whether it’s a tropical paradise, a bustling city, or a hidden gem, I’ll help you find the perfect destination! ✈️",
+                "valueType": "dynamic"
+              },
+              "validation": {
+                "validators": [
+                  {
+                    "id": "vld-8e57e4b49c",
+                    "type": "code",
+                    "code": "  if (workflow.KnowCity === 'Yes, I know where I want to go!') {\n    workflow.KnowCity = 'Yes' // Jeśli zgadza się z pierwszą opcją, zapisujemy 'Yes'\n  }\n  // Sprawdzamy, czy workflow.KnowCity zawiera pełną odpowiedź \"No, I’m still deciding on the destination.\"\n  else if (workflow.KnowCity === 'No, I’m still deciding on the destination.') {\n    workflow.KnowCity = 'No' // Jeśli zgadza się z drugą opcją, zapisujemy 'No'\n  }\n  return true",
+                    "generative": {
+                      "label": "",
+                      "properties": {
+                        "code": false
+                      },
+                      "suggestion": {
+                        "code": " return true"
+                      }
+                    }
+                  }
+                ]
+              },
+              "choice": {
+                "options": {
+                  "valueType": "static",
+                  "staticValue": [
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "Yes, I know where I want to go!"
+                      },
+                      "value": "Yes, I know where I want to go!",
+                      "enabled": true
+                    },
+                    {
+                      "label": {
+                        "valueType": "dynamic",
+                        "dynamicValue": "No, I’m still deciding on the destination."
+                      },
+                      "value": "No, I’m still deciding on the destination.",
+                      "enabled": true
+                    }
+                  ],
+                  "dynamicValue": ""
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [
+                {
+                  "id": "trs-0f3b047fcf",
+                  "type": "transition",
+                  "label": "Yes, I know where I want to go!",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=Yes, I know where I want to go!"
+                  },
+                  "destination": {
+                    "node": "nd-769e87f9a4"
+                  }
+                },
+                {
+                  "id": "trs-ca28afacda",
+                  "type": "transition",
+                  "label": "No, I’m still deciding on the destination.",
+                  "condition": {
+                    "type": "expression",
+                    "payload": "__CHOICE=No, I’m still deciding on the destination."
+                  },
+                  "destination": {
+                    "node": "nd-769e87f9a4"
+                  }
+                }
+              ],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: Which one would you like? Choices: [ 1) Red Apple, 2) Yellow Apple, 3) Dark Banana ]\nuser: I will go with the second one please\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{\"choice\":\"Yellow Apple\"}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { choice: {{CHOICES_TYPINGS}} }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-b32c21c042",
+          "name": "Do_You_Know_What_City"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 555,
+          "y": -540,
+          "instructions": [
+            {
+              "id": "ins-31e3411e0c",
+              "type": "capture",
+              "entityId": "prompts://RawInput/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-6dcb79b210",
+              "variableId": "var-76d951173b",
+              "question": {
+                "valueType": "dynamic",
+                "dynamicValue": "Perfect! ✈️ Now, where would you like to go? Please tell me the city you're flying to",
+                "staticValue": ""
+              },
+              "validation": {
+                "validators": []
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"undefined\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: undefined\nuser: undefined\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0,
+                "signatureVersion": "Jan-2024",
+                "signature": "wsDIMaSsJ1YTaWLaNEaV5IgB+C2qyh801nUa4CdCsmubxvThog1rJ7tYXwHKDnA4cpOm6gnznXN6AdKJSoh/tbRxO1abxj04bRbCn9y7BZ8i3qZQl1Le5PIaAmfampxeHFl8IasZNZYi5uWVQnd1IPS3iFv6wYhBGa/EPlz+AagSKdqmn11u/DSAfrYixnA2rW+XEORrVeVMt1P8zFU7ssoTSSNt7LZh1xmH0amoWFad2vSDxu/2eU55NZSGFlB8a1soPEGYq83QN6mHXldjsO1mEV7cHWsSBZPTXG37GipXEbYKe/9sQNwg6mpBLIuvbliiJ9DvjkkSyXQVkVhTyg=="
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-61acf19c1e"
+          },
+          "id": "nd-6dcb79b210",
+          "name": "Set_City_End"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": -210,
+          "y": -180,
+          "instructions": [
+            {
+              "id": "ins-9eb8d1a17c",
+              "type": "action",
+              "category": "Execute",
+              "code": "async function extractAndAssignCurrencyCode() {\r\n  const userInput = workflow.CurrencyCodeB // Pobieramy dane z workflow.CurrencyCodeB\r\n  let currencyCode = '' // Zmienna, którą później przypiszemy\r\n\r\n  // Lista dostępnych walut\r\n  const validCurrencies = [\r\n    'USD',\r\n    'EUR',\r\n    'GBP',\r\n    'PLN',\r\n    'INR',\r\n    'JPY' // Dodaj inne waluty według potrzeby\r\n  ]\r\n\r\n  // Sprawdzamy, czy dane wejściowe nie są puste\r\n  if (userInput) {\r\n    const parts = userInput.split(' - ') // Dzielimy na część przed myślnikiem\r\n    if (parts.length > 1) {\r\n      currencyCode = parts[0].trim().toUpperCase() // Wydobywamy kod waluty i konwertujemy na wielkie litery\r\n    } else {\r\n      currencyCode = userInput.trim().toUpperCase() // Używamy pełnego tekstu, jeśli nie ma myślnika\r\n    }\r\n\r\n    // Sprawdzamy, czy kod waluty jest na liście dostępnych walut\r\n    if (validCurrencies.includes(currencyCode)) {\r\n      // Zapisujemy wynik do workflow\r\n      workflow.CurrencyCode = currencyCode\r\n    } else {\r\n      // Jeśli waluta nie jest prawidłowa\r\n      workflow.CurrencyCode = 'Unknown'\r\n    }\r\n  } else {\r\n    workflow.CurrencyCode = 'Unknown' // Jeśli nie ma danych wejściowych\r\n  }\r\n\r\n  bp.logger.info(`Nadpisany kod waluty: ${workflow.CurrencyCode}`)\r\n}\r\n\r\n// Bezpośrednie wywołanie funkcji\r\nextractAndAssignCurrencyCode()\r\n",
+              "origin": "builtin",
+              "label": "Extract and assign currency code from user input.",
+              "nodeId": "nd-e93ddc7ce5",
+              "isCustomLabel": false,
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  async function extractAndAssignCurrencyCode() {\n    const userInput = workflow.CurrencyCodeB;\n    let currencyCode = \"\";\n    const validCurrencies = [\n      \"USD\",\n      \"EUR\",\n      \"GBP\",\n      \"PLN\",\n      \"INR\",\n      \"JPY\"\n      // Dodaj inne waluty według potrzeby\n    ];\n    if (userInput) {\n      const parts = userInput.split(\" - \");\n      if (parts.length > 1) {\n        currencyCode = parts[0].trim().toUpperCase();\n      } else {\n        currencyCode = userInput.trim().toUpperCase();\n      }\n      if (validCurrencies.includes(currencyCode)) {\n        workflow.CurrencyCode = currencyCode;\n      } else {\n        workflow.CurrencyCode = \"Unknown\";\n      }\n    } else {\n      workflow.CurrencyCode = \"Unknown\";\n    }\n    bp.logger.info(`Nadpisany kod waluty: ${workflow.CurrencyCode}`);\n  }\n  __name(extractAndAssignCurrencyCode, \"extractAndAssignCurrencyCode\");\n  extractAndAssignCurrencyCode();\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-b32c21c042"
+          },
+          "id": "nd-e93ddc7ce5",
+          "name": "Standard14"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": -300,
+          "y": -15,
+          "instructions": [
+            {
+              "id": "ins-909d3d9786",
+              "category": "Capture Information",
+              "type": "capture",
+              "entityId": "prompts://RawInput/v1",
+              "entityName": "Raw Input",
+              "kbPriority": {
+                "enabled": true,
+                "searchScope": "all",
+                "kbs": []
+              },
+              "nodeId": "nd-0cfe8edd15",
+              "variableId": "var-6f00e5534d",
+              "question": {
+                "staticValue": "",
+                "dynamicValue": "Tell your currency Code",
+                "valueType": "dynamic"
+              },
+              "validation": {
+                "validators": [
+                  {
+                    "id": "vld-03683f6ee6",
+                    "type": "code",
+                    "code": "\n  // Lista dostępnych walut\n  const validCurrencies = [\n    'USD', 'EUR', 'GBP', 'PLN', 'INR', 'JPY' // Możesz dodać więcej walut\n  ];\n\n  // Sprawdzamy, czy wprowadzone dane są jednym z kodów walut\n  const currencyCode = input.trim().toUpperCase(); // Konwertujemy na wielkie litery i usuwamy zbędne spacje\n\n  // Sprawdzamy, czy kod waluty jest na liście\n  if (validCurrencies.includes(currencyCode)) {\n    return true; // Jeśli waluta jest poprawna, zwracamy true\n  }\n\n  return false; // Jeśli waluta nie jest poprawna, zwracamy false",
+                    "generative": {
+                      "label": "",
+                      "properties": {
+                        "code": false
+                      },
+                      "suggestion": {
+                        "code": " return true"
+                      }
+                    }
+                  }
+                ]
+              },
+              "choice": {
+                "options": {
+                  "staticValue": [],
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "retry": {
+                "maxRetries": 2,
+                "retryMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "dynamic"
+                }
+              },
+              "cancellation": {
+                "cancellable": true,
+                "confirmCancel": true,
+                "confirmCancelMessage": {
+                  "staticValue": "",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                }
+              },
+              "handleFailure": false,
+              "historyLookback": 0,
+              "skipIfAlreadyFilled": false,
+              "transitions": [],
+              "prompt": {
+                "messages": [
+                  {
+                    "role": "system",
+                    "content": "You are ExtractGPT and your only goal is to generate useful content in JSON format for developers to parse and use. You don't know any other language than JSON."
+                  },
+                  {
+                    "role": "user",
+                    "content": "```typescript\n/** The user answer to the question \"undefined\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\nagent: undefined\nuser: undefined\n\"\"\""
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "{}"
+                  },
+                  {
+                    "role": "user",
+                    "content": "\nNow, forget about the previous transcripts. These were just examples, don't consider those as valid transcripts for this new task.\n\n###\n\nThe current Date is {{CURRENT_DATE_TIME}}.\n\nAt this point of the conversation, I need require the user to fill the output in following JSON output to complete the task.\nIf more than one property, try to extract each of them the best you can.\n\n```typescript\n/** The user answer to the question \"{{QUESTION}}\" */\ninterface Output = { value: any }\n```\n\nHere is a conversation between me and a user. Transcript:\n\"\"\"\n(...)\n{{TRANSCRIPT}}\n\"\"\"\n\nIn the last user message, here are the entities found:\n\"\"\"\nENTITIES_IDENTIFIED\n\"\"\"\n\nI need you to extract from the conversation transcript above the values the user has provided.\nIf the user has not provided the information I need, I need you to set the value of the missing answer properties to null.\nHave some tolerance to typos and variations in how the user selects from the possible values.\n\n\n\nNow, please reply to me with the above JSON output and nothing but JSON.\nYou should not explain your answer and should not talk back to me. Just JSON."
+                  }
+                ],
+                "model": "gpt-3.5-turbo",
+                "temperature": 0
+              }
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-e93ddc7ce5"
+          },
+          "id": "nd-0cfe8edd15",
+          "name": "Standard15"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 4350,
+          "y": -600,
+          "instructions": [
+            {
+              "id": "ins-17f95b2f0e",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.FlightNumber === 1"
+              },
+              "label": "If FlightNumber is equal 1",
+              "generative": {
+                "label": "If FlightNumber is equal 1",
+                "suggestion": {},
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-34e2ffac7b",
+              "description": "",
+              "destination": {
+                "node": "nd-1d48f6ca4d"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-8a363a5de4",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.FlightNumber === 2"
+              },
+              "label": "If FlightNumber is equal 2",
+              "generative": {
+                "label": "If FlightNumber is equal 2",
+                "suggestion": {
+                  "condition": "true"
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-34e2ffac7b",
+              "description": "",
+              "destination": {
+                "node": "nd-e42f47b397"
+              },
+              "transitions": []
+            },
+            {
+              "id": "ins-16645ce221",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "workflow.FlightNumber === 3"
+              },
+              "label": "If FlightNumber is equal 3",
+              "generative": {
+                "label": "If FlightNumber is equal 3",
+                "suggestion": {
+                  "condition": "true"
+                },
+                "properties": {
+                  "condition": false
+                }
+              },
+              "category": "Flow Logic",
+              "nodeId": "nd-34e2ffac7b",
+              "description": "",
+              "destination": {
+                "node": "nd-05101898cb"
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-34e2ffac7b",
+          "name": "Standard17"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 4815,
+          "y": -630,
+          "instructions": [
+            {
+              "id": "ins-5655943a95",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 1\nPrice: @workflow.PriceStart1  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity1 To: @workflow.EndCity1\nDate:  @workflow.Date1\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-e42f47b397",
+              "transitions": []
+            },
+            {
+              "id": "ins-415aa5c35f",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 2\nPrice: @workflow.PriceStart2  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity2 To: @workflow.EndCity2\nDate:  @workflow.Date2\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-e42f47b397",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-80ac4ff158"
+          },
+          "id": "nd-e42f47b397",
+          "name": "Standard18"
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 4815,
+          "y": -405,
+          "instructions": [
+            {
+              "id": "ins-1d780b75bb",
+              "category": "Send Messages",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "Flight 1\nPrice: @workflow.PriceStart1  @workflow.CurrencyCode\nNumber of stops: @workflow.NumberOfStops\nFrom: @workflow.StartCity1 To: @workflow.EndCity1\nDate:  @workflow.Date1\n",
+                  "staticValue": ""
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-1d48f6ca4d",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-1d48f6ca4d",
+          "name": "Standard19"
+        }
+      ],
+      "parentFolder": "root"
+    }
+  ],
+  "intents": [
+    {
+      "id": "int-cancel",
+      "name": "cancel",
+      "utterances_with_slots": [
+        "cancel",
+        "abort",
+        "abandon",
+        "i want to cancel",
+        "forget about this",
+        "leave",
+        "stop",
+        "quit",
+        "you know what, nevermind",
+        "forget it"
+      ]
+    },
+    {
+      "id": "int-no",
+      "name": "no",
+      "utterances_with_slots": [
+        "no",
+        "i don't want to",
+        "absolutely not",
+        "nah",
+        "nope",
+        "not really",
+        "not sure",
+        "no thanks"
+      ]
+    },
+    {
+      "id": "int-yes",
+      "name": "yes",
+      "utterances_with_slots": [
+        "yes",
+        "yeah",
+        "absolutely",
+        "i'd like to",
+        "sure ",
+        "hmm probably",
+        "yup",
+        "ok"
+      ]
+    }
+  ],
+  "list_entities": [],
+  "pattern_entities": [],
+  "actions": [],
+  "hooks": [],
+  "qnas": [],
+  "knowledge_base": [
+    {
+      "dataSources": [
+        {
+          "created_on": 1720181426933,
+          "data": {
+            "documents": [],
+            "indexingJobs": [
+              "aa4f8cb0-4825-4941-a800-0b1f0b70258f-01J21CV2KM8Y1YVD8MB0NJEWHM"
+            ]
+          },
+          "disabled": false,
+          "id": "ds-511de2083d",
+          "title": "cities.txt",
+          "type": "document"
+        },
+        {
+          "created_on": 1729859723171,
+          "data": {},
+          "disabled": false,
+          "id": "ds-b0bef75d12",
+          "type": "file-api"
+        }
+      ],
+      "description": "This is about New KB1",
+      "id": "kb-2e1848b79d",
+      "name": "AirfieldCities",
+      "parentFolder": "root"
+    },
+    {
+      "dataSources": [
+        {
+          "created_on": 1729860212167,
+          "data": {},
+          "disabled": false,
+          "id": "ds-1c88af96d9",
+          "type": "file-api"
+        },
+        {
+          "created_on": 1717498718928,
+          "data": {
+            "freshness": "Any",
+            "websiteFilter": "include",
+            "websites": []
+          },
+          "disabled": false,
+          "id": "ds-87c7e06bb4",
+          "type": "web-search"
+        }
+      ],
+      "description": "This is about New KB1",
+      "id": "kb-2f0a7ea639",
+      "name": "Default Knowledge Base",
+      "parentFolder": "root"
+    },
+    {
+      "dataSources": [
+        {
+          "created_on": 1729859643263,
+          "data": {},
+          "disabled": false,
+          "id": "ds-a8d7dc4667",
+          "type": "file-api"
+        }
+      ],
+      "description": "This is about Countries base on description",
+      "id": "kb-9dcfd36cd7",
+      "name": "Countries base on description",
+      "parentFolder": "root"
+    }
+  ],
+  "folders": [],
+  "agents": {
+    "SummaryAgent": {
+      "enabled": true,
+      "config": {
+        "summaryMaxTokens": 100
+      }
+    },
+    "TranslatorAgent": {
+      "config": {
+        "detectLanguage": true
+      }
+    },
+    "KnowledgeAgent": {
+      "enabled": true,
+      "config": {
+        "answerManually": false,
+        "context": "Summary of the conversation:\n\"\"\"\n{{conversation.SummaryAgent.summary}}\n\"\"\"\n\nTranscript:\n\"\"\"\n{{conversation.SummaryAgent.transcript}}\n\"\"\"",
+        "bestModel": "gpt-4-turbo",
+        "strategy": "hybrid",
+        "chunks": 50
+      }
+    },
+    "PersonalityAgent": {
+      "config": {
+        "personality": ""
+      }
+    }
+  },
+  "tables": {},
+  "schemas": [],
+  "versions": [
+    {
+      "name": "14 Dec 24 05:35",
+      "id": "version_01JF30CH16M4BKV6KQ3BPDTB0M"
+    },
+    {
+      "name": "20 Nov 24 09:48",
+      "id": "version_01JD5NA5A64J4D9BBPNKK17JN0"
+    },
+    {
+      "name": "15 Nov 24 11:03",
+      "id": "version_01JCQMEMRV98BP8TDKG4ADGKPA"
+    }
+  ],
+  "revision": 907,
+  "revisionMetadata": {
+    "lastRevisionCheckAt": "2024-12-20T16:50:25.409Z",
+    "lastRevisionId": 906,
+    "multiplayerStatus": "connected",
+    "multiplayerTraces": [
+      "2024-12-20T15:30:15.865Z: initialized -> connecting (ok)",
+      "2024-12-20T15:30:16.485Z (7lY0PhEjXc): connecting -> connected (ok)"
+    ],
+    "players": [
+      "mirasowsky@gmail.com / sess_01JFJB1K3ZTCGM8BYB8TBNG9RG / Fri, 20 Dec 2024 15:30:16 GMT"
+    ],
+    "savedAt": "2024-12-20T16:50:25.409Z",
+    "savedBy": "mirasowsky@gmail.com",
+    "sessionId": "sess_01JFJB1K3ZTCGM8BYB8TBNG9RG"
+  },
+  "identity": {
+    "name": "electrical-giraffe",
+    "manual_instructions": "",
+    "icon": {
+      "type": "emoji",
+      "emoji": "🤖 ",
+      "background_color": "var(--orange-5)"
+    },
+    "ai_summary": {
+      "value": "Not provided",
+      "generated_at": "2024-12-14T15:27:56.290Z",
+      "input_hash": "123",
+      "version": "1.0"
+    }
+  }
+}

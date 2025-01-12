@@ -1,0 +1,18 @@
+[
+  {
+    "id": "d2854d0e-0a9c-4523-b641-d63a0522f306",
+    "label": "cities.txt",
+    "name": "https://s3.us-east-1.amazonaws.com/cloud-studio-botsbca2d619-1916w6llinepa/aa4f8cb0-4825-4941-a800-0b1f0b70258f/document/4f5d7e6b-fc51-48df-b9c9-dd0e523e7b22.txt",
+    "dataSourceId": "ds-511de2083d",
+    "lastModified": "2024-07-05T12:10:26.851Z",
+    "size": 74284,
+    "metadata": {
+      "type": "text",
+      "fileName": "cities.txt"
+    },
+    "tags": [
+      "ds-511de2083d"
+    ],
+    "chunks": 83
+  }
+]
